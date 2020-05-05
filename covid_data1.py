@@ -10,8 +10,10 @@ class DataTable():
             no_of_columns = len(row_data)-1 #number of columns in the dataset excluding the index
             print('number of columns in the given csv file excluding index '+ str(no_of_columns))
             for next_line_data in fileobject:
-                lines = next_line_data.strip().split(',') # reading the rest of the data from from csv file as list
-                dict1 = dict(zip(row_data, lines))        # converting the two lists into dictionary
+                next_line_data = next_line_data.replace('"Bonaire, Sint Eustatius and Saba"','Bonaire Sint Eustatius and Saba')
+                next_line_data = next_line_data.replace('"Korea, South"','South Korea')
+                next_line_data = next_line_data.strip().split(',') # reading the rest of the data from from csv file as list
+                dict1 = dict(zip(row_data, next_line_data))        # converting the two lists into dictionary
                 list_data.append(dict1)                    #appending the dictionary to list
                 row_count += 1                              #for getting the row data count from dataset(csv file)
             print('number of rows in the the given csv file '+ str(row_count))
@@ -134,26 +136,26 @@ data_table = DataTable(data=None)
 data_table.read_csv('covid_data.csv')
 
 
-#column_name=input('Enter the column name: ')
-#list_column_data = data_table.locate_column(column_name)
-#print(list_column_data)
+column_name=input('Enter the column name: ')
+list_column_data = data_table.locate_column(column_name)
+print(list_column_data)
 
-#index_no = input('Enter the index number to get info: ')
-#row_data = data_table.locate_index(index_no)
-#print(row_data)
+index_no = input('Enter the index number to get info: ')
+row_data = data_table.locate_index(index_no)
+print(row_data)
 
 column_name = input('Enter the column name: ')
 value = input('Enter the value corresponding to column name: ')
 dk_data = data_table.filter_values(column_name,value)
 print(dk_data)
 
-#column_name = input('Enter the column name as country or date: ')
-#country_count = data_table.value_counts(column_name)
-#print(country_count)
+column_name = input('Enter the column name as country or date: ')
+country_count = data_table.value_counts(column_name)
+print(country_count)
 
-#column_name = input('Enter the column name as country for knowing the maximum deaths: ')
-#country_name,max_deaths = data_table.max_death_country(column_name)
-#print(f'{country_name} country with maximum deaths {max_deaths}')
+column_name = input('Enter the column name as country for knowing the maximum deaths: ')
+country_name,max_deaths = data_table.max_death_country(column_name)
+print(f'{country_name} country with maximum deaths {max_deaths}')
 
 #column_name = input('Enter the column name as date: ')
 #value = input('Enter the date to see the confirmed cases in Scandinavia : ')
